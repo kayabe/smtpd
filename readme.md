@@ -126,7 +126,7 @@ import (
     "net"
     "net/mail"
 
-    "github.com/mhale/smtpd"
+    "github.com/kayabe/smtpd"
 )
 
 func mailHandler(origin net.Addr, from string, to []string, data []byte) error {

@@ -779,8 +779,8 @@ func TestMakeEHLOResponse(t *testing.T) {
 		t.Errorf("AUTH does not appear in the extension list when an AuthHandler is specified")
 	}
 
-	reLogin := regexp.MustCompile("\\bLOGIN\\b")
-	rePlain := regexp.MustCompile("\\bPLAIN\\b")
+	reLogin := regexp.MustCompile(`\bLOGIN\b`)
+	rePlain := regexp.MustCompile(`\bPLAIN\b`)
 
 	// RFC 4954 specifies that, without TLS in use, plaintext authentication mechanisms must not be advertised.
 	s.tls = false

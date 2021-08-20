@@ -156,15 +156,6 @@ func (srv *Server) ListenAndServe() error {
 	if srv.Addr == "" {
 		srv.Addr = ":25"
 	}
-	if srv.Appname == "" {
-		srv.Appname = "smtpd"
-	}
-	if srv.Hostname == "" {
-		srv.Hostname, _ = os.Hostname()
-	}
-	if srv.Timeout == 0 {
-		srv.Timeout = 5 * time.Minute
-	}
 
 	var ln net.Listener
 	var err error
@@ -185,6 +176,18 @@ func (srv *Server) ListenAndServe() error {
 func (srv *Server) Serve(ln net.Listener) error {
 	if atomic.LoadInt32(&srv.inShutdown) != 0 {
 		return ErrServerClosed
+	}
+
+	if srv.Appname == "" {
+		srv.Appname = "smtpd"
+	}
+
+	if srv.Hostname == "" {
+		srv.Hostname, _ = os.Hostname()
+	}
+
+	if srv.Timeout == 0 {
+		srv.Timeout = 5 * time.Minute
 	}
 
 	defer ln.Close()
@@ -451,9 +454,9 @@ loop:
 			// On other errors, allow the client to try again.
 			data, err := s.readData()
 			if err != nil {
-				switch err.(type) {
+				switch err := err.(type) {
 				case net.Error:
-					if err.(net.Error).Timeout() {
+					if err.Timeout() {
 						s.writef("421 4.4.2 %s %s ESMTP Service closing transmission channel after timeout exceeded", s.srv.Hostname, s.srv.Appname)
 					}
 					break loop
