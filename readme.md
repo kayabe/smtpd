@@ -1,5 +1,8 @@
 # smtpd
 
+[![GoDoc](https://godoc.org/github.com/kayabe/smtpd?status.svg)](https://godoc.org/github.com/kayabe/smtpd)
+![Status](https://github.com/kayabe/smtpd/workflows/Go/badge.svg)
+
 An SMTP server package written in Go, in the style of the built-in HTTP server. It meets the minimum requirements specified by RFC 2821 & 5321.
 
 It is based on [Brad Fitzpatrick's go-smtpd](https://github.com/bradfitz/go-smtpd). The differences can be summarised as:
